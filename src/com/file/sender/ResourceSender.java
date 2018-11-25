@@ -18,7 +18,7 @@ import java.util.List;
  * @Version: V1.0
  **/
 public class ResourceSender implements Runnable {
-    public static final int BUFFER_SIZE = 1 << 23;  // 32KB
+    public static final int BUFFER_SIZE = 1 << 24;  // 32KB
 
     private Socket socket;
     private DataOutputStream dos;
