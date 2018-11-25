@@ -77,7 +77,7 @@ public class ResourceReceiverServer implements Runnable {
             try {
 //                侦听“发送客户端”请求，侦听一个，处理一个
                 Socket sender = serverSocket.accept();
-                new ResourceReceiver(sender, currentSenderCount);
+                new ResourceReceiver(sender, this, currentSenderCount);
                 currentSenderCount++;
                 // TODO 可能存在一些需要让资源接收者参与的某些工作
                 // 连接到一个发送端

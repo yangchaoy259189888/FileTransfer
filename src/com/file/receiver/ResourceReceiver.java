@@ -17,9 +17,12 @@ import java.net.Socket;
 public class ResourceReceiver implements Runnable {
     private Socket sender;
     private DataInputStream dis;
+    private ResourceReceiverServer resourceReceiverServer;
 
-    public ResourceReceiver(Socket sender, int number) throws IOException {
+    public ResourceReceiver(Socket sender, ResourceReceiverServer resourceReceiverServer,
+                            int number) throws IOException {
         this.sender = sender;
+        this.resourceReceiverServer = resourceReceiverServer;
         dis = new DataInputStream(sender.getInputStream());
         new Thread(this, "ResourceReceiver-" + number).start();
     }
@@ -60,17 +63,17 @@ public class ResourceReceiver implements Runnable {
 
 //        把length字节，即文件的长度存入缓冲区
         byte[] buffer = receiveBytes(length);
-//        ResourceFileBlock resourceFileBlock = new ResourceFileBlock();
-//        resourceFileBlock.setFileId(fileId);
-//        resourceFileBlock.setOffset(offset);
-//        resourceFileBlock.setLength(length);
-//        resourceFileBlock.setContent(buffer);
-//
-//        try {
-//            resourceFileBlock.writeFileBlock(resourceReceiverServer.getReceiveFileMap());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        ResourceFileBlock resourceFileBlock = new ResourceFileBlock();
+        resourceFileBlock.setFileId(fileId);
+        resourceFileBlock.setOffset(offset);
+        resourceFileBlock.setLength(length);
+        resourceFileBlock.setContent(buffer);
+
+        try {
+            resourceFileBlock.writeFileBlock(resourceReceiverServer.getReceiveFileMap());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return false;
     }
@@ -88,7 +91,6 @@ public class ResourceReceiver implements Runnable {
 
         while (length > 0) {
             realReceiveLength = dis.read(buffer, offset, length);
-            System.out.println("本次读取" + realReceiveLength + "字节");
             offset += realReceiveLength;
             length -= realReceiveLength;
         }

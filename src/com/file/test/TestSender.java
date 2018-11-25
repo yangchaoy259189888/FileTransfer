@@ -20,43 +20,10 @@ import java.util.List;
  **/
 public class TestSender {
     public static void main(String[] args) {
-        String absoluteRootPath = "E:\\资料\\MEC\\java\\";
-        String filePath = "MECjava\\201806060030100.mp4";
-        try {
-            ReceiveFileModel receiveFileModel = new ReceiveFileModel();
-            receiveFileModel.setAbsoluteRootPath(absoluteRootPath);
-            receiveFileModel.setFilePath(filePath);
-            receiveFileModel.setFileLength(131500723);
-            ReceiveFileMap receiveFileMap = new ReceiveFileMap();
-            receiveFileMap.addReceiveFile(1, receiveFileModel);
-
-            List<SendFileModel> sendFileModelList = new ArrayList<>();
-            SendFileModel sendFileModel = new SendFileModel();
-            sendFileModel.setAbsoluteRootPath(absoluteRootPath);
-            sendFileModel.setFilePath(filePath);
-            sendFileModel.setOffset(1024);
-            sendFileModel.setLength(1024 * 1024 * 10);
-
-            sendFileModelList.add(sendFileModel);
-
-            ResourceSenderCenter senderCenter = new ResourceSenderCenter(
-                    "127.0.0.1", 54190);
-            senderCenter.setSendFileMap(receiveFileMap);
-            senderCenter.setSendFileList(sendFileModelList);
-            senderCenter.startSendding();
-        } catch (ReceiveFileIdRedefinedException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /*public static void main(String[] args) {
         try {
             String absoluteRootPath = "E:\\资料\\MEC\\java\\";
             String filePath = "MECjava\\201806060030100.mp4";
-            int fileLength = 16;
+            int fileLength = 131500723;
 
             ReceiveFileModel receiveFileModel = new ReceiveFileModel();
             receiveFileModel.setAbsoluteRootPath(absoluteRootPath);
@@ -75,8 +42,9 @@ public class TestSender {
                 SendFileModel sendFile = new SendFileModel();
                 sendFile.setAbsoluteRootPath(absoluteRootPath);
                 sendFile.setFilePath(filePath);
-                sendFile.setOffset(1024);
-                sendFile.setLength(16);
+                sendFile.setOffset(offset);
+                sendFile.setLength(len);
+
                 sendFileModelList.add(sendFile);
 
                 fileLength -= len;
@@ -93,5 +61,5 @@ public class TestSender {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

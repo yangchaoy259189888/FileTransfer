@@ -63,7 +63,6 @@ public class ResourceFileBlock {
         RandomAccessFile raf = new RandomAccessFile(absoluteRootPath + filePath, "rws");
         raf.seek(offset);
         raf.write(content);
-        System.out.println(offset + ":" + length);
 
         raf.close();
     }
